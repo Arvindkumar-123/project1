@@ -1,45 +1,64 @@
-// const cloudinary = require('cloudinary').v2;
-// const { CloudinaryStorage } = require('multer-storage-cloudinary');
-
-// cloudinary.config({
-//     cloud_name:process.env.CLOUD_NAME,
-//     api_key:process.env.CLOUD_API_KEY,
-//     api_secret:process.env.CLOUD_API_SECRET
-// });
-
-// const storage = new CloudinaryStorage({
-//     cloudinary: cloudinary,
-//     params: {
-//       folder: 'Wanderlust_DEV',
-//       allowerdFormats: ['png','jpg','jpeg'],
-//     },
-//   });
-
-//   module.exports = {
-//     cloudinary,
-//     storage,
-//   };
-const crypto = require('crypto');
-
 const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
-  cloud_name:process.env.CLOUD_NAME,
-  api_key:process.env.CLOUD_API_KEY,
-  api_secret:process.env.CLOUD_API_SECRET
+    cloud_name:process.env.CLOUD_NAME,
+    api_key:process.env.CLOUD_API_KEY,
+    api_secret:process.env.CLOUD_API_SECRET
 });
 
-// This should come from your frontend
-const timestamp = Math.floor(Date.now() / 1000);
-const folder = "Wanderlust_DEV";
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'Wanderlust_DEV',
+      allowerdFormats: ['png','jpg','jpeg'],
+    },
+  });
 
-const signature = crypto
-  .createHash('sha1')
-  .update(`folder=${folder}&timestamp=${timestamp}${cloudinary.config().api_secret}`)
-  .digest('hex');
+  module.exports = {
+    cloudinary,
+    storage,
+  };
 
-console.log(signature); // send this to frontend
+//  const crypto = require('crypto');
 
-module.exports={
-signature 
-}
+//  const cloudinary = require('cloudinary').v2;
+
+// cloudinary.config({
+//   cloud_name:process.env.CLOUD_NAME,
+//   api_key:process.env.CLOUD_API_KEY,
+//   api_secret:process.env.CLOUD_API_SECRET
+// });
+
+// // This should come from your frontend
+// const timestamp = Math.floor(Date.now() / 1000);
+// const folder = "Wanderlust_DEV";
+
+// const signature = crypto
+//   .createHash('sha1')
+//   .update(`folder=${folder}&timestamp=${timestamp}${cloudinary.config().api_secret}`)
+//   .digest('hex');
+
+// console.log(signature); // send this to frontend
+
+// module.exports={
+// signature 
+// }
+// const timestamp = Math.floor(Date.now() / 1000); // Ensure this is a valid number
+// const folder = "Wanderlust_DEV";
+// const apiSecret = cloudinary.config().api_secret;
+
+// console.log(`Timestamp: ${timestamp}`);
+// console.log(`Folder: ${folder}`);
+// console.log(`API Secret: ${apiSecret}`);
+
+// const signature = crypto
+//   .createHash('sha1')
+//   .update(`folder=${folder}&timestamp=${timestamp}${apiSecret}`)
+//   .digest('hex');
+
+// console.log(`Signature: ${signature}`);
+
+// module.exports ={
+//   cloudinary,signature
+// }
